@@ -46,6 +46,12 @@ export interface GalleryItem {
     thumb?: string;
 
     /**
+     * Lazy load thumbnail
+     * @description Enable lazy loading of thumbnails for the opened gallery
+     */
+    lazyLoadThumb?: boolean;
+
+    /**
      * alt attribute for the image
      * @data-attr alt
      */
@@ -568,10 +574,12 @@ const utils = {
             const alt = currentItem.find('img').first().attr('alt');
             const title = currentItem.attr('title');
 
+            const currentImgEl = currentItem.find('img').first();
             const thumb = exThumbImage
                 ? currentItem.attr(exThumbImage)
-                : currentItem.find('img').first().attr('src');
+                : currentImgEl.attr('src');
             dynamicEl.thumb = thumb;
+            dynamicEl.lazyLoadThumb = currentImgEl.attr('loading') === 'lazy';
 
             if (getCaptionFromTitleOrAlt && !dynamicEl.subHtml) {
                 dynamicEl.subHtml = title || alt || '';
@@ -579,7 +587,6 @@ const utils = {
             dynamicEl.alt = alt || title || '';
             dynamicElements.push(dynamicEl);
         });
-        console.log(dynamicElements, 'dynamicElements');
         return dynamicElements;
     },
     isMobile(): boolean {
