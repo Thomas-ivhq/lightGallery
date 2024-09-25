@@ -406,12 +406,7 @@ export default class Thumbnail {
         return thumbDragUtils;
     }
 
-    getThumbHtml(
-        thumb: string,
-        index: number,
-        alt?: string,
-        lazyLoadThumb?: boolean,
-    ): HTMLElement {
+    getThumbHtml(thumb: string, index: number, alt?: string, lazyLoadThumb?: boolean): HTMLElement {
         const slideVideoInfo =
             this.core.galleryItems[index].__slideVideoInfo || {};
         let thumbImg;
@@ -449,12 +444,7 @@ export default class Thumbnail {
 
     setThumbItemHtml(items: ThumbnailGalleryItem[]): void {
         for (let i = 0; i < items.length; i++) {
-            const thumb = this.getThumbHtml(
-                items[i].thumb,
-                i,
-                items[i].alt,
-                items[i].lazyLoadThumb,
-            );
+            const thumb = this.getThumbHtml(items[i].thumb, i, items[i].alt, items[i].lazyLoadThumb);
             this.$lgThumb.append(thumb);
         }
     }
